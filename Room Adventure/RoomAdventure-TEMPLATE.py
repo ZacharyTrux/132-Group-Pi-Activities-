@@ -193,7 +193,89 @@ class Game(Frame):
 
 	# processes the player's input
 	def process(self, event):
-
+		# grab the player's input from the input at the bottom of
+		# the GUI
+		action = Game.player_input.get()
+		# set the user's input to lowercase to make it easier to
+		# compare the verb and noun to known values
+		action = action.lower()
+		# set a default response
+		response = "I don't understand. Try verb noun. Valid verbs are go, look, and take"
+		# exit the game if the player wants to leave (supports quit,
+		# exit, and bye)
+  
+		if (action == "quit" or action == "exit" or action == "bye" or action == "sionara!"):
+			exit(0)
+   
+		# if the player is dead if goes/went south from room 4
+		if (Game.currentRoom == None):
+			# clear the player's input
+			Game.player_input.delete(0, END)
+			return 
+   
+		# split the user input into words (words are separated by
+		# spaces) and store the words in a list
+		words = action.split()
+		# the game only understands two word inputs
+		if (len(words) == 2):
+			# isolate the verb and noun
+			verb = words[0]
+			noun = words[1]
+   
+			# the verb is: go
+			if (verb == "go"):
+				# set a default response
+				response = "Invalid exit."
+   
+				# check for valid exits in the current room
+				if (noun in Game.currentRoom.exits):
+					# if one is found, change the current room to
+					# the one that is associated with the
+					# specified exit
+					Game.currentRoom = Game.currentRoom.exits[noun]
+		
+				# set the response (success)
+				response = "Room changed."
+    
+			# the verb is: look
+			elif (verb == "look"):
+				# set a default response
+				response = "I don't see that item."
+				# check for valid items in the current room
+    
+				if (noun in Game.currentRoom.items):
+				# if one is found, set the response to the
+				# item's description
+				response = Game.currentRoom.items[noun]
+    
+			# the verb is: take
+			elif (verb == "take"):
+			# set a default response
+			response = "I don't see that item."
+   
+				# check for valid grabbable items in the current
+				# room
+				for grabbable in Game.currentRoom.grabbables:
+				# a valid grabbable item is found
+					if (noun == grabbable):
+						# add the grabbable item to the player's
+						# inventory
+						Game.inventory.append(grabbable)
+						# remove the grabbable item from the
+						# room
+						Game.currentRoom.delGrabbable(grabbable)
+						# set the response (success)
+						response = "Item grabbed."
+						# no need to check any more grabbable
+						# items
+						break
+		# display the response on the right of the GUI
+		# display the room's image on the left of the GUI
+		# clear the player's input
+		self.setStatus(response)
+		self.setRoomImage()
+		Game.player_input.delete(0,END)
+  
 ##########################################################
 # the default size of the GUI is 800x600
 WIDTH = 800
