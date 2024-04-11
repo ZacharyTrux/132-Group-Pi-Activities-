@@ -114,7 +114,7 @@ class Game(Frame):
 
 	# creates the rooms
 	def createRooms(self):
-		r1 = Room("Room 1", "room1.gif")
+		r1 = Room("Room 1", "roomImage/room1.gif")
 		r2 = Room("Room 2", "room2.gif")
 		r3 = Room("Room 3", "room3.gif")
 		r4 = Room("Room 4", "room4.gif")
