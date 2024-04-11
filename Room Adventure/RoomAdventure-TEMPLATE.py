@@ -146,6 +146,7 @@ class Game(Frame):
 		
 		Game.currentRoom = r1
 		Game.inventory = []
+  
 	# sets up the GUI
 	def setupGUI(self):
 		#organize the GUI
@@ -323,4 +324,3 @@ g.play()
 # wait for the window to close
 window.mainloop()
 
-change
