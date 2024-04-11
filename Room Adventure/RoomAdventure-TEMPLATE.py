@@ -177,7 +177,7 @@ class Game(Frame):
    
 		else:
 			# otherwise, display the appropriate status
-			Game.text.insert(END, f"{Game.currentRoom} \nYou are caryying: {Game.inventory}\n\n {status}"
+			Game.text.insert(END, f"{Game.currentRoom} \nYou are caryying: {Game.inventory}\n\n {status}")
                 
 		Game.text.config(state=DISABLED)
 	# plays the game
@@ -241,17 +241,16 @@ class Game(Frame):
 			elif (verb == "look"):
 				# set a default response
 				response = "I don't see that item."
-				# check for valid items in the current room
     
+				# check for valid items in the current room
 				if (noun in Game.currentRoom.items):
-				# if one is found, set the response to the
-				# item's description
-				response = Game.currentRoom.items[noun]
+					# if one is found, set the response to the item's description
+					response = Game.currentRoom.items[noun]
     
 			# the verb is: take
 			elif (verb == "take"):
 			# set a default response
-			response = "I don't see that item."
+				response = "I don't see that item."
    
 				# check for valid grabbable items in the current
 				# room
