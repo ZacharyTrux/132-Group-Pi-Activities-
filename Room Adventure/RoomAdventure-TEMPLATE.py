@@ -117,13 +117,69 @@ class Game(Frame):
 
 	# sets up the GUI
 	def setupGUI(self):
+		#organize the GUI
+		self.pack(fill=BOTH, expand=1)
 
+		# setup the player input at the bottom of the GUI
+		# the widget is a Tkinter Entry
+		# set its background to white and bind the return key to the
+		# function process in the class
+		# push it to the bottom of the GUI and let it fill
+		# horizontally
+		# give it focus so the player doesn't have to click on it
+		Game.player_input = Entry(self, bg="white")
+		Game.player_input.bind("<Return>", self.process)
+		Game.player_input.pack(side=BOTTOM, fill=X)
+		Game.player_input.focus()
+  
+		# setup the image to the left of the GUI
+		# the widget is a Tkinter Label
+		# don't let the image control the widget's size
+		img = None
+		Game.image = Label(self, width=WIDTH // 2, image=img)
+		Game.image.image = img
+		Game.image.pack(side=LEFT, fill=Y)
+		Game.image.pack_propagate(False)
+  
+		# setup the text to the right of the GUI
+		# first, the frame in which the text will be placed
+		text_frame = Frame(self, width = WIDTH // 2)
+  
+		# the widget is a Tkinter Text
+		# disable it by default
+		# don't let the widget control the frame's size
+  
+		Game.text = Text(text_frame, bg = "lightgrey", state = DISABLED)
+		Game.text.pack(fill=Y, expand=1)
+		text_frame.pack(side=RIGHT, fill=Y)
+		text_frame.pack_propagate(False)
+  
 	# sets the current room image
 	def setRoomImage(self):
-
+		if (Game.currentRoom == None):
+			# if dead, set the skull image
+			Game.img = PhotoImage(file="skull.gif")
+		else:
+			# otherwise grab the image for the current room
+			Game.img = PhotoImage(file=Game.currentRoom.image)
+			# display the image on the left of the GUI
+			Game.image.config(image=Game.img)
+			Game.image.image = Game.img
+   
 	# sets the status displayed on the right of the GUI
 	def setStatus(self, status):
-
+		# sets the status displayed on the right of the GUI
+		Game.text.config(state=NORMAL)
+		Game.text.delete("1.0", END)
+		if (Game.currentRoom == None):
+			# if dead, let the player know
+			Game.text.insert(END, "You are dead. The only thing you can do now is quit.\n")
+   
+		else:
+			# otherwise, display the appropriate status
+			Game.text.insert(END, f"{Game.currentRoom} \nYou are caryying: {Game.inventory}\n\n {status}"
+                
+		Game.text.config(state=DISABLED)
 	# plays the game
 	def play(self):
 		# add the rooms to the game
