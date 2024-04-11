@@ -114,7 +114,38 @@ class Game(Frame):
 
 	# creates the rooms
 	def createRooms(self):
+		r1 = Room("Room 1", "room1.gif")
+		r2 = Room("Room 2", "room2.gif")
+		r3 = Room("Room 3", "room3.gif")
+		r4 = Room("Room 4", "room4.gif")
 
+		r1.addExit("east", r2)
+		r1.addExit("south", r3)
+		r1.addGrabbable("key")
+		r1.addItem("chair", "It is made of wicker and no one is sitting on it.")
+		r1.addItem("table", "It is made of oak. A golden key rests on it.")
+		
+		r2.addExit("west", r1)
+		r2.addExit("south", r4)
+		r2.addItem("rug", "It is nice and Indian. It also needs to be vacuumed.")
+		r2.addItem("fireplace", "It is full of ashes.")
+
+		r3.addExit("north", r1)
+		r3.addExit("east", r4)
+		r3.addGrabbable("book")
+		r3.addItem("bookshelves", "They are empty. Go figure.")
+		r1.addItem("statue", "There is nothing special about it.")
+		r3.addItem("desk", "The statue is resting on it. So is a book.")
+
+		r4.addExit("north", r2)
+		r4.addExit("west", r3)
+		r4.addExit("south", None)
+		r1.addGrabbable("6-pack")
+		r1.addItem("brew_rig", "Gourd is brewing some sort of oatmeal stout \
+			 on the brew rig. A 6-pack is resting beside it.")
+		
+		Game.currentRoom = r1
+		Game.inventory = []
 	# sets up the GUI
 	def setupGUI(self):
 
