@@ -114,10 +114,10 @@ class Game(Frame):
 
 	# creates the rooms
 	def createRooms(self):
-		r1 = Room("Room 1", "Room1.gif")
-		r2 = Room("Room 2", "room2.gif")
-		r3 = Room("Room 3", "room3.gif")
-		r4 = Room("Room 4", "room4.gif")
+		r1 = Room("Room 1", "Room Adventure/roomImage/room1.gif")
+		r2 = Room("Room 2", "Room Adventure/roomImage/room2.gif")
+		r3 = Room("Room 3", "Room Adventure/roomImage/room3.gif")
+		r4 = Room("Room 4", "Room Adventure/roomImage/room4.gif")
 
 		r1.addExit("east", r2)
 		r1.addExit("south", r3)
@@ -209,7 +209,7 @@ class Game(Frame):
    
 		else:
 			# otherwise, display the appropriate status
-			Game.text.insert(END, f"{Game.currentRoom} \nYou are caryying: {Game.inventory}\n\n {status}")
+			Game.text.insert(END, f"{Game.currentRoom} \nYou are carying: {Game.inventory}\n\n {status}")
                 
 		Game.text.config(state=DISABLED)
   
