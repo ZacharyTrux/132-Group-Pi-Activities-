@@ -209,7 +209,7 @@ class Game(Frame):
    
 		else:
 			# otherwise, display the appropriate status
-			Game.text.insert(END, f"{Game.currentRoom} \nYou are carying: {Game.inventory}\n\n {status}")
+			Game.text.insert(END, f"{Game.currentRoom} \nYou are carrying: {Game.inventory}\n\n {status}")
                 
 		Game.text.config(state=DISABLED)
   
