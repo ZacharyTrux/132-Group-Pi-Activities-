@@ -307,7 +307,7 @@ class Game(Frame):
 					# if one is found, change the current room to
 					# the one that is associated with the
 					# specified exit
-					if noun != Game.currentRoom.exitsr5:
+					if noun not in Game.currentRoom.exits:
 						Game.currentRoom = Game.currentRoom.exits[noun]
 					else:
 						if "key" in Game.inventory:
