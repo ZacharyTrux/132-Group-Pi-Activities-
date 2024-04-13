@@ -116,9 +116,9 @@ class Game(Frame):
 	def createRooms(self):
 		#change before we put in 
 		r1 = Room("Room 1", "Room Adventure/roomImage/ZachRoom1.gif")
-		r2 = Room("Room 2", "Room Adventure/roomImage/room2.gif")
+		r2 = Room("Room 2", "Room Adventure/roomImage/Alaynaroom2.gif")
 		r3 = Room("Room 3", "Room Adventure/roomImage/ZachRoom3.gif")
-		r4 = Room("Room 4", "Room Adventure/roomImage/room4.gif")
+		r4 = Room("Room 4", "Room Adventure/roomImage/Alaynaroom4.gif")
 
 		r1.addExit("east", r2)
 		r1.addExit("south", r3)
