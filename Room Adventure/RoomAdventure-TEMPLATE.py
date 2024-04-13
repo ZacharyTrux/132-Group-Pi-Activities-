@@ -5,6 +5,17 @@
 ###########################################################################################
 from tkinter import *
 
+class Entity:
+    def __init__(self,health):
+        self.health = health
+        
+    @property
+    def health(self):
+        return self._health
+    @health.setter
+    def health(self,value):
+        self._health = value
+
 # the room class
 # note that this class is fully implemented with dictionaries as illustrated in the lesson "More on Data Structures"
 class Room:
@@ -18,6 +29,7 @@ class Room:
 		self.exits = {}
 		self.items = {}
 		self.grabbables = []
+		self.enemy = {}
 
 	# getters and setters for the instance variables
 	@property
@@ -85,6 +97,9 @@ class Room:
 	def delGrabbable(self, item):
 		# remove the item from the list
 		self._grabbables.remove(item)
+	
+	def addEnemy(self):
+		pass
 
 	# returns a string description of the room
 	def __str__(self):
@@ -97,13 +112,22 @@ class Room:
 			s += item + " "
 		s += "\n"
 
+		# if an enemy is seen
+		if(len(self.enemy) >= 0):
+			s += "You also see: "
+			for baddy in self.enemy:
+				s+= baddy
+				s+= "\n"
+		
 		# next, the exits from the room
 		s += "Exits: "
 		for exit in self.exits.keys():
 			s += exit + " "
 
 		return s
-
+     
+     
+     
 # the game class
 # inherits from the Frame class of Tkinter
 class Game(Frame):
@@ -112,9 +136,14 @@ class Game(Frame):
 		# call the constructor in the superclass
 		Frame.__init__(self, parent)
 
+	def setValues(self):
+		player = Entity(150)
+		enemy = Entity(300)
+ 
 	# creates the rooms
 	def createRooms(self):
 		#change before we put in 
+	
 		r1 = Room("Room 1", "Room Adventure/roomImage/ZachRoom1.gif")
 		r2 = Room("Room 2", "Room Adventure/roomImage/Alaynaroom2.gif")
 		r3 = Room("Room 3", "Room Adventure/roomImage/ZachRoom3.gif")
@@ -226,6 +255,8 @@ class Game(Frame):
   
 	# plays the game
 	def play(self):
+		# add the entities that are in the game 
+		self.setValues()
 		# add the rooms to the game
 		self.createRooms()
 		# configure the GUI
