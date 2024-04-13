@@ -148,6 +148,8 @@ class Game(Frame):
 		r2 = Room("Room 2", "Room Adventure/roomImage/Alaynaroom2.gif")
 		r3 = Room("Room 3", "Room Adventure/roomImage/ZachRoom3.gif")
 		r4 = Room("Room 4", "Room Adventure/roomImage/Alaynaroom4.gif")
+		r5 = Room("Room 5", "")
+		r6 = Room("ROom 6", "")
 
 		r1.addExit("east", r2)
 		r1.addExit("south", r3)
@@ -170,9 +172,17 @@ class Game(Frame):
 		r4.addExit("north", r2)
 		r4.addExit("west", r3)
 		r4.addExit("south", None)
+		r4.addExit("up", "r5")
 		r1.addGrabbable("6-pack")
 		r1.addItem("brew_rig", "Gourd is brewing some sort of oatmeal stout \
 			 on the brew rig. A 6-pack is resting beside it.")
+		
+		r5.addExit("north", r6)
+		r5.addGrabbable("Netherite sword")
+		r5.addGrabbable("impenetrable sheild")
+		r5.addGrabbable("fire fower")
+		r5.addGrabbable("sensu bean")
+
 		
 		Game.currentRoom = r1
 		Game.inventory = []
@@ -297,8 +307,13 @@ class Game(Frame):
 					# if one is found, change the current room to
 					# the one that is associated with the
 					# specified exit
-					Game.currentRoom = Game.currentRoom.exits[noun]
-		
+					if noun != Game.currentRoom.exits[]:
+						Game.currentRoom = Game.currentRoom.exits[noun]
+					else:
+						if "key" in Game.inventory:
+							Game.currentRoom = Game.currentRoom.exits[noun]
+						else:
+							print("You need to find the key")
 				# set the response (success)
 				response = "Room changed."
     
