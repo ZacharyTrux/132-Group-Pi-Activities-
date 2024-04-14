@@ -312,7 +312,6 @@ class Game(Frame):
 					# if one is found, change the current room to
 					# the one that is associated with the
 					# specified exit
-<<<<<<< HEAD
 					Game.currentRoom = Game.currentRoom.exits[noun] 
      
 					'''
@@ -323,9 +322,6 @@ class Game(Frame):
 						else:
 					'''
      		#response = ("You need to find the key")
-=======
-					Game.currentRoom = Game.currentRoom.exits[noun]
->>>>>>> 052e24b55e11a8d2a1f936c2040e8a5d681fc3e5
 				# set the response (success)
 				response = "Room changed."
     
