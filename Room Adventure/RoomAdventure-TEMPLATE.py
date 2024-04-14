@@ -98,8 +98,8 @@ class Room:
 		# remove the item from the list
 		self._grabbables.remove(item)
 	
-	def addEnemy(self):
-		pass
+	def addEnemy(self,baddy,desc):
+		self.enemy[baddy] = desc
 
 	# returns a string description of the room
 	def __str__(self):
@@ -148,8 +148,8 @@ class Game(Frame):
 		r2 = Room("Room 2", "Room Adventure/roomImage/Alaynaroom2.gif")
 		r3 = Room("Room 3", "Room Adventure/roomImage/ZachRoom3.gif")
 		r4 = Room("Room 4", "Room Adventure/roomImage/Alaynaroom4.gif")
-		r5 = Room("Room 5", "")
-		r6 = Room("ROom 6", "")
+		r5 = Room("Room 5", "Room Adventure/roomImage/Alaynaroom4.gif")
+		r6 = Room("Room 6", "Room Adventure/roomImage/Alaynaroom4.gif")
 
 		r1.addExit("east", r2)
 		r1.addExit("south", r3)
@@ -172,16 +172,21 @@ class Game(Frame):
 		r4.addExit("north", r2)
 		r4.addExit("west", r3)
 		r4.addExit("south", None)
-		r4.addExit("up", "r5")
+		r4.addExit("up", r5)
 		r1.addGrabbable("6-pack")
 		r1.addItem("brew_rig", "Gourd is brewing some sort of oatmeal stout \
 			 on the brew rig. A 6-pack is resting beside it.")
 		
 		r5.addExit("north", r6)
-		r5.addGrabbable("Netherite sword")
-		r5.addGrabbable("impenetrable sheild")
-		r5.addGrabbable("fire fower")
-		r5.addGrabbable("sensu bean")
+		r5.addExit("down", r4)
+		r5.addGrabbable("Netherite-sword")
+		r5.addGrabbable("Impenetrable-sheild")
+		r5.addGrabbable("Fire-flower")
+		r5.addGrabbable("Sensu-bean")
+
+		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up livy dunne in Ohio with level 100 rizz")
+  
+
 
 		
 		Game.currentRoom = r1
@@ -307,13 +312,16 @@ class Game(Frame):
 					# if one is found, change the current room to
 					# the one that is associated with the
 					# specified exit
-					if noun not in Game.currentRoom.exits:
+					Game.currentRoom = Game.currentRoom.exits[noun] 
+     
+					'''
 						Game.currentRoom = Game.currentRoom.exits[noun]
 					else:
 						if "key" in Game.inventory:
 							Game.currentRoom = Game.currentRoom.exits[noun]
 						else:
-							print("You need to find the key")
+					'''
+     		#response = ("You need to find the key")
 				# set the response (success)
 				response = "Room changed."
     
