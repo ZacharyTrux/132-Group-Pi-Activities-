@@ -1,20 +1,29 @@
 ###########################################################################################
-# Name: 
-# Date: 
+# Name: Zachary, Alayna, Justus, Grayson
+# Date: 4/22/2024
 # Description: 
 ###########################################################################################
 from tkinter import *
+import random import choice
 
 class Entity:
-    def __init__(self,health):
-        self.health = health
+    def __init__(self,playerHealth,enemyHealth):
+        self.playerhealth = playerHealth
+        self.enemyHealth = enemyHealth
         
     @property
-    def health(self):
-        return self._health
-    @health.setter
-    def health(self,value):
-        self._health = value
+    def playerHealth(self):
+        return self._playerHealth
+    @playerHealth.setter
+    def playerHealth(self,value):
+        self._playerHealth = value
+        
+    @property
+    def enemyHealth(self):
+        return self._enemyHealth
+    @enemyHealth.setter
+    def enemyHealth(self,value):
+        self._enemyHealth = value
 
 # the room class
 # note that this class is fully implemented with dictionaries as illustrated in the lesson "More on Data Structures"
@@ -140,6 +149,8 @@ class Game(Frame,Entity):
 	# creates the rooms
 	def createRooms(self):
 		#change before we put in 
+		player = Entity(150)
+		boss = Entity(300)
 	
 		r1 = Room("Room 1", "Room Adventure/roomImage/ZachRoom1.gif")
 		r2 = Room("Room 2", "Room Adventure/roomImage/Alaynaroom2.gif")
@@ -186,10 +197,45 @@ class Game(Frame,Entity):
 		
 		Game.currentRoom = r1
 		Game.inventory = []
-	
-	def commenceBattle(self,thing):
-		if(thing = "player"):
-		elif(thing = "boss")
+
+	def attack(self,name):
+		num = randint(0,5)
+
+		if(name == "player"):
+		num = choice([0,45,,70,125,20,20,20])
+			if(num==0):
+				return 0
+			elif(num==1):
+				return 45
+			elif(num==2):
+				return 70
+			elif(num==2):
+				return 125
+			else:
+				return 20
+		else:
+			if(num==0):
+				return 0
+			elif(num==1):
+				return 5
+			elif(num==2):
+				return 10
+			elif(num==3):
+				return 20
+			else:
+				return 3
+
+
+	def commenceBattle(self):
+		while(self.playerHealth > 0 and self.enemyHealth > 0):
+			self.attack("player")
+			self.attack("boss")
+		if(self.playerHealth == 0):
+			return True 
+		else:
+			return False
+			
+			
 	
 	# sets up the GUI
 	def setupGUI(self):
@@ -313,13 +359,6 @@ class Game(Frame,Entity):
 					# specified exit
 					Game.currentRoom = Game.currentRoom.exits[noun] 
      
-					'''
-						Game.currentRoom = Game.currentRoom.exits[noun]
-					else:
-						if "key" in Game.inventory:
-							Game.currentRoom = Game.currentRoom.exits[noun]
-						else:
-					'''
      		#response = ("You need to find the key")
 				# set the response (success)
 				response = "Room changed."
@@ -355,12 +394,23 @@ class Game(Frame,Entity):
 						# no need to check any more grabbable
 						# items
 						break
+  
 			elif(verb == "attack"):
 				response = "I don't know what enemy you're talking about."
 
 				for enemy in Game.currentRoom.enemy:
 					self.setStatus("Battle has commenced")
 					result = Game.commenceBattle(enemy)
+
+
+					if(result == False):
+						response = "Congratulations you won the game! \nYou can continue exploring or quit the game."
+						exit(0)
+					else:
+						response = "You lost goodbye..."
+						Game.img = PhotoImage(file = "skull.gif")
+					break
+ 
 		# display the response on the right of the GUI
 		# display the room's image on the left of the GUI
 		# clear the player's input
