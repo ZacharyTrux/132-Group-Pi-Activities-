@@ -100,7 +100,7 @@ class Room:
 	
 	def addEnemy(self,baddy,desc):
 		self.enemy[baddy] = desc
-
+     
 	# returns a string description of the room
 	def __str__(self):
 		# first, the room name
@@ -130,16 +130,13 @@ class Room:
      
 # the game class
 # inherits from the Frame class of Tkinter
-class Game(Frame):
+class Game(Frame,Entity):
 	# the constructor
-	def __init__(self, parent):
+	def __init__(self, parent,health):
 		# call the constructor in the superclass
 		Frame.__init__(self, parent)
+		Entity.__init__(self,health)
 
-	def setValues(self):
-		player = Entity(150)
-		enemy = Entity(300)
- 
 	# creates the rooms
 	def createRooms(self):
 		#change before we put in 
@@ -185,13 +182,15 @@ class Game(Frame):
 		r5.addGrabbable("Sensu-bean")
 
 		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up livy dunne in Ohio with level 100 rizz")
-  
-
 
 		
 		Game.currentRoom = r1
 		Game.inventory = []
-  
+	
+	def commenceBattle(self,thing):
+		if(thing = "player"):
+		elif(thing = "boss")
+	
 	# sets up the GUI
 	def setupGUI(self):
 		#organize the GUI
@@ -356,6 +355,12 @@ class Game(Frame):
 						# no need to check any more grabbable
 						# items
 						break
+			elif(verb == "attack"):
+				response = "I don't know what enemy you're talking about."
+
+				for enemy in Game.currentRoom.enemy:
+					self.setStatus("Battle has commenced")
+					result = Game.commenceBattle(enemy)
 		# display the response on the right of the GUI
 		# display the room's image on the left of the GUI
 		# clear the player's input
