@@ -7,10 +7,15 @@ from tkinter import *
 from random import choice
 
 class Entity:
-    def __init__(self,playerHealth,enemyHealth):
-        self.playerhealth = playerHealth
-        self.enemyHealth = enemyHealth
-        
+    def __init__(self,health):
+     	self.health = health
+    
+    @property
+	
+    
+	
+  
+'''    
     @property
     def playerHealth(self):
         return self._playerHealth
@@ -24,7 +29,7 @@ class Entity:
     @enemyHealth.setter
     def enemyHealth(self,value):
         self._enemyHealth = value
-
+'''
 # the room class
 # note that this class is fully implemented with dictionaries as illustrated in the lesson "More on Data Structures"
 class Room:
@@ -199,20 +204,26 @@ class Game(Frame,Entity):
 		Game.inventory = []
 
 	def attack(self,name):
-		num1 = [0,45,70,125,20,20,20]
-		num2 = [0,5,10,20,3,3]
+		num1 = choice[0,45,70,125,20,20,20]
+		num2 = choice[0,5,10,20,3,3]
 		if(name == "player"):
+			Game.text.insert(f"You did {(num1)} damage to you!")
+			self.player.health -= num1
 			return choice(num1)
 		else:
-			return choice(num2)
+			Game.text.insert(f"The boss did {(num2)} damage to you!")
+			self.player.health -= num2
 
 	def commenceBattle(self):
-		while(self.playerHealth > 0 and self.enemyHealth > 0):
+		while(self.player.health > 0 and self.enemy.health > 0):
 			self.attack("player")
 			self.attack("boss")
+   
 		if(self.playerHealth == 0):
+			#player loses return True
 			return True 
 		else:
+			#player wins return False
 			return False
 			
 			
