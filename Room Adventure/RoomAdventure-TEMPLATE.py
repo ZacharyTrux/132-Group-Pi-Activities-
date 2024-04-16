@@ -6,16 +6,12 @@
 from tkinter import *
 from random import choice
 
-class Entity:
-    def __init__(self,health):
-     	self.health = health
+class Entities:
+    def __init__(self,playerHealth,enemyHealth):
+        self.playerHealth = playerHealth
+        self.enemyHealth = enemyHealth
     
-    @property
-	
-    
-	
-  
-'''    
+
     @property
     def playerHealth(self):
         return self._playerHealth
@@ -29,7 +25,7 @@ class Entity:
     @enemyHealth.setter
     def enemyHealth(self,value):
         self._enemyHealth = value
-'''
+
 # the room class
 # note that this class is fully implemented with dictionaries as illustrated in the lesson "More on Data Structures"
 class Room:
@@ -144,25 +140,24 @@ class Room:
      
 # the game class
 # inherits from the Frame class of Tkinter
-class Game(Frame,Entity):
+class Game(Frame,Entities):
 	# the constructor
-	def __init__(self, parent,health):
+	def __init__(self, parent):
 		# call the constructor in the superclass
 		Frame.__init__(self, parent)
-		Entity.__init__(self,health)
+		Entities.__init__(self,playerHealth = 150, enemyHealth = 300)
+
 
 	# creates the rooms
 	def createRooms(self):
 		#change before we put in 
-		player = Entity(150)
-		boss = Entity(300)
 	
 		r1 = Room("Room 1", "Room Adventure/roomImage/ZachRoom1.gif")
 		r2 = Room("Room 2", "Room Adventure/roomImage/Alaynaroom2.gif")
 		r3 = Room("Room 3", "Room Adventure/roomImage/ZachRoom3.gif")
 		r4 = Room("Room 4", "Room Adventure/roomImage/Alaynaroom4.gif")
-		r5 = Room("Room 5", "Room Adventure/roomImage/Alaynaroom4.gif")
-		r6 = Room("Room 6", "Room Adventure/roomImage/Alaynaroom4.gif")
+		r5 = Room("Room 5", "Room Adventure/roomImage/Armory.gif")
+		r6 = Room("Room 6", "Room Adventure/roomImage/BabyGronkRoom.gif")
 
 		r1.addExit("east", r2)
 		r1.addExit("south", r3)
@@ -179,25 +174,25 @@ class Game(Frame,Entity):
 		r3.addExit("east", r4)
 		r3.addGrabbable("book")
 		r3.addItem("bookshelves", "They are empty. Go figure.")
-		r1.addItem("statue", "There is nothing special about it.")
+		r3.addItem("statue", "There is nothing special about it.")
 		r3.addItem("desk", "The statue is resting on it. So is a book.")
 
 		r4.addExit("north", r2)
 		r4.addExit("west", r3)
 		r4.addExit("south", None)
 		r4.addExit("up", r5)
-		r1.addGrabbable("6-pack")
-		r1.addItem("brew_rig", "Gourd is brewing some sort of oatmeal stout \
+		r4.addGrabbable("6-pack")
+		r4.addItem("brew_rig", "Gourd is brewing some sort of oatmeal stout \
 			 on the brew rig. A 6-pack is resting beside it.")
 		
 		r5.addExit("north", r6)
 		r5.addExit("down", r4)
 		r5.addGrabbable("Netherite-sword")
-		r5.addGrabbable("Impenetrable-sheild")
+		r5.addGrabbable("Impenetrable-shield")
 		r5.addGrabbable("Fire-flower")
 		r5.addGrabbable("Sensu-bean")
 
-		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up livy dunne in Ohio with level 100 rizz")
+		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up livy dunne in Ohio with level 100 rizz, he also has a PHD in Rizzonomics")
 
 		
 		Game.currentRoom = r1
@@ -208,14 +203,14 @@ class Game(Frame,Entity):
 		num2 = choice[0,5,10,20,3,3]
 		if(name == "player"):
 			Game.text.insert(f"You did {(num1)} damage to you!")
-			self.player.health -= num1
+			self.enemyHealth -= num1
 			return choice(num1)
 		else:
 			Game.text.insert(f"The boss did {(num2)} damage to you!")
-			self.player.health -= num2
+			self.playerHealth -= num2
 
 	def commenceBattle(self):
-		while(self.player.health > 0 and self.enemy.health > 0):
+		while(self.playerHealth > 0 and self.enemyHealth > 0):
 			self.attack("player")
 			self.attack("boss")
    
@@ -296,8 +291,6 @@ class Game(Frame,Entity):
   
 	# plays the game
 	def play(self):
-		# add the entities that are in the game 
-		self.setValues()
 		# add the rooms to the game
 		self.createRooms()
 		# configure the GUI
