@@ -4,13 +4,13 @@
 # Description: 
 ###########################################################################################
 from tkinter import *
-import random import choice
+from random import choice
 
 class Entity:
     def __init__(self,playerHealth,enemyHealth):
         self.playerhealth = playerHealth
         self.enemyHealth = enemyHealth
-        shssh
+        
     @property
     def playerHealth(self):
         return self._playerHealth
@@ -199,32 +199,12 @@ class Game(Frame,Entity):
 		Game.inventory = []
 
 	def attack(self,name):
-		num = randint(0,5)
-
+		num1 = [0,45,70,125,20,20,20]
+		num2 = [0,5,10,20,3,3]
 		if(name == "player"):
-		num = choice([0,45,,70,125,20,20,20])
-			if(num==0):
-				return 0
-			elif(num==1):
-				return 45
-			elif(num==2):
-				return 70
-			elif(num==2):
-				return 125
-			else:
-				return 20
+			return choice(num1)
 		else:
-			if(num==0):
-				return 0
-			elif(num==1):
-				return 5
-			elif(num==2):
-				return 10
-			elif(num==3):
-				return 20
-			else:
-				return 3
-
+			return choice(num2)
 
 	def commenceBattle(self):
 		while(self.playerHealth > 0 and self.enemyHealth > 0):
