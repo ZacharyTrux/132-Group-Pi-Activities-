@@ -146,7 +146,8 @@ class Game(Frame,Entities):
 		# call the constructor in the superclass
 		Frame.__init__(self, parent)
 		Entities.__init__(self,playerHealth = 150, enemyHealth = 300)
-
+		self.playerHealth = 150
+		self.enemyHealth = 300
 
 	# creates the rooms
 	def createRooms(self):
@@ -202,7 +203,7 @@ class Game(Frame,Entities):
 		num1 = choice[0,45,70,125,20,20,20]
 		num2 = choice[0,5,10,20,3,3]
 		if(name == "player"):
-			Game.text.insert(f"You did {(num1)} damage to you!")
+			Game.text.insert(f"You did {(num1)} damage to Baby-Gronk!")
 			self.enemyHealth -= num1
 			return choice(num1)
 		else:
