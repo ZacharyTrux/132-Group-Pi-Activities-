@@ -123,14 +123,14 @@ class Room:
 		s += "\n"
 
 		# if an enemy is seen
-		if(len(self.enemy) >= 0):
-			s += "You also see: "
-			for baddy in self.enemy:
+		for baddy in self.enemy:
+			if(baddy == "Baby-Gronk"):
+				s += "You also see: "
 				s+= baddy
 				descrip = self.enemy["Baby-Gronk"]
 				s+= f"\n{descrip}"	
 				s+= "\n"
-		
+			
 		# next, the exits from the room
 		s += "Exits: "
 		for exit in self.exits.keys():
