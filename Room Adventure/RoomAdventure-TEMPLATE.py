@@ -359,7 +359,7 @@ class Game(Frame):
 			# the verb is: take
 			elif (verb == "take"):
 			# set a default response
-				response = "I don't see that item."
+				response = "you can't pick up that item!"
    
 				# check for valid grabbable items in the current
 				# room
