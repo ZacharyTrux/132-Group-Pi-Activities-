@@ -105,10 +105,10 @@ class Room:
 
 		# if an enemy is seen
 		for baddy in self.enemy:
-			if(baddy == "Baby-Gronk"):
+			if(baddy == "baby-gronk"):
 				s += "You also see: "
 				s+= baddy
-				descrip = self.enemy["Baby-Gronk"]
+				descrip = self.enemy["baby-gronk"]
 				s+= f"\n{descrip}"	
 				s+= "\n"
 			
@@ -199,13 +199,17 @@ class Game(Frame):
 		Game.inventory = []
 
 	def attack(self,name):
-		playerDamage = choice[0,45,70,125,20,20,20]
-		bossDamage = choice[0,5,10,20,3,3]
+		playerDamage = choice([0,45,70,125,20,20,20])
+		bossDamage = choice([0,5,10,20,3,3])
 		if(name == "player"):
-			Game.text.insert(f"You did {(playerDamage)} damage to Baby-Gronk!")
+			Game.text.config(state=NORMAL)
+			Game.text.insert(END,f"You did {(playerDamage)} damage to Baby-Gronk!")
+			Game.text.config(state=DISABLED)
 			return playerDamage
 		else:
-			Game.text.insert(f"The boss did {(bossDamage)} damage to you!")
+			Game.text.config(state=NORMAL)
+			Game.text.insert(END,f"The boss did {(bossDamage)} damage to you!")
+			Game.text.config(state=DISABLED)
 			return bossDamage
 
 	def commenceBattle(self):
@@ -381,14 +385,13 @@ class Game(Frame):
 			elif(verb == "attack"):
 				response = "I don't know what enemy you're talking about."
 
-			
-				if(noun == Game.currentRoom.enemy):
+				if(noun == "baby-gronk"):
 					self.setStatus("Battle has commenced")
-					result = Game.commenceBattle()
+					result = self.commenceBattle()
      
 					if(result == False):
-						response = "Congratulations you won the game! \nYou can continue exploring or quit the game."
-						exit(0)
+						response = "Congratulations you won the game! \nThe title of Rizzler is bestowed upon you."
+
 					else:
 						response = "You lost goodbye..."
 						Game.img = PhotoImage(file = "Room Adventure/roomImage/skull.gif")
