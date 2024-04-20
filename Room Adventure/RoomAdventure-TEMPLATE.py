@@ -183,13 +183,13 @@ class Game(Frame,Entities):
 		r4.addExit("north", r2)
 		r4.addExit("west", r3)
 		r4.addExit("south", None)
-		r4.addExit("up", r5)
+		r4.addExit("up-stairs", r5)
 		r4.addGrabbable("6-pack")
 		r4.addItem("brew_rig", "Gourd is brewing some sort of oatmeal stout \
 			 on the brew rig. A 6-pack is resting beside it.")
 		
 		r5.addExit("north", r6)
-		r5.addExit("down", r4)
+		r5.addExit("down-stairs", r4)
 		r5.addGrabbable("Netherite-sword")
 		r5.addGrabbable("Impenetrable-shield")
 		r5.addGrabbable("Fire-flower")
@@ -269,7 +269,7 @@ class Game(Frame,Entities):
 	def setRoomImage(self):
 		if (Game.currentRoom == None):
 			# if dead, set the skull image
-			Game.img = PhotoImage(file = "skull.gif")
+			Game.img = PhotoImage(file = "Room Adventure/roomImage/skull.gif")
 		else:
 			# otherwise grab the image for the current room
 			Game.img = PhotoImage(file = Game.currentRoom.image)
@@ -393,7 +393,7 @@ class Game(Frame,Entities):
 						exit(0)
 					else:
 						response = "You lost goodbye..."
-						Game.img = PhotoImage(file = "skull.gif")
+						Game.img = PhotoImage(file = "Room Adventure/roomImage/skull.gif")
 					break
  
 		# display the response on the right of the GUI
