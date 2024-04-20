@@ -202,15 +202,15 @@ class Game(Frame,Entities):
 		Game.inventory = []
 
 	def attack(self,name):
-		num1 = choice[0,45,70,125,20,20,20]
-		num2 = choice[0,5,10,20,3,3]
+		playerDamage = choice[0,45,70,125,20,20,20]
+		bossDamage = choice[0,5,10,20,3,3]
 		if(name == "player"):
-			Game.text.insert(f"You did {(num1)} damage to Baby-Gronk!")
-			self.enemyHealth -= num1
-			return choice(num1)
+			Game.text.insert(f"You did {(playerDamage)} damage to Baby-Gronk!")
+			self.enemyHealth -= playerDamage
+			return choice(playerDamage)
 		else:
-			Game.text.insert(f"The boss did {(num2)} damage to you!")
-			self.playerHealth -= num2
+			Game.text.insert(f"The boss did {(bossDamage)} damage to you!")
+			self.playerHealth -= bossDamage
 
 	def commenceBattle(self):
 		while(self.playerHealth > 0 and self.enemyHealth > 0):
