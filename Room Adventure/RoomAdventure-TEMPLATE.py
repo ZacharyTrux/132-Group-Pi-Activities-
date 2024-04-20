@@ -190,13 +190,16 @@ class Game(Frame,Entities):
 		
 		r5.addExit("north", r6)
 		r5.addExit("down-stairs", r4)
-		r5.addGrabbable("Netherite-sword")
-		r5.addGrabbable("Impenetrable-shield")
-		r5.addGrabbable("Fire-flower")
-		r5.addGrabbable("Sensu-bean")
+		r5.addItem("sword", "A very sharp sword it might come in handy against football players")
+		r5.addGrabbable("sword")
+		r5.addItem("shield", "Might be helpful to have saving a princess!")
+		r5.addGrabbable("shield")
+		r5.addItem("fire-flower","You feel its embers inside of you")
+		r5.addGrabbable("fire-flower")
+		r5.addItem("beans",'You feel a great sense of power from these beans, they say the owner is somebody named Goku')
+		r5.addGrabbable("beans")
 
 		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up Livy Dunne in Ohio\nwith level 100 rizz, he also has a PHD \nin Rizzonomics")
-
 		
 		Game.currentRoom = r1
 		Game.inventory = []
@@ -312,7 +315,7 @@ class Game(Frame,Entities):
 		# compare the verb and noun to known values
 		action = action.lower()
 		# set a default response
-		response = "I don't understand. Try verb noun. Valid verbs are go, look, and take"
+		response = "I don't understand. Try verb noun. Valid verbs are go, look, take, and attack"
 		# exit the game if the player wants to leave (supports quit,
 		# exit, and bye)
   
