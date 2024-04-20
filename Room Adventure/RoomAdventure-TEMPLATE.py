@@ -344,6 +344,8 @@ class Game(Frame,Entities):
 					# specified exit
 					Game.currentRoom = Game.currentRoom.exits[noun] 
      
+				
+     
      		#response = ("You need to find the key")
 				# set the response (success)
 				response = "Room changed."
