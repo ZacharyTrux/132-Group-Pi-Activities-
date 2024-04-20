@@ -148,8 +148,6 @@ class Game(Frame,Entities):
 		# call the constructor in the superclass
 		Frame.__init__(self, parent)
 		Entities.__init__(self,playerHealth = 150, enemyHealth = 300)
-		self.playerHealth = 150
-		self.enemyHealth = 300
 
 	# creates the rooms
 	def createRooms(self):
