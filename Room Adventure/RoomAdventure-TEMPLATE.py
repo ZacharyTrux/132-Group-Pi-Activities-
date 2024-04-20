@@ -6,25 +6,6 @@
 from tkinter import *
 from random import choice
 
-class Entities:
-    def __init__(self,playerHealth,enemyHealth):
-        self.playerHealth = playerHealth
-        self.enemyHealth = enemyHealth
-    
-
-    @property
-    def playerHealth(self):
-        return self._playerHealth
-    @playerHealth.setter
-    def playerHealth(self,value):
-        self._playerHealth = value
-        
-    @property
-    def enemyHealth(self):
-        return self._enemyHealth
-    @enemyHealth.setter
-    def enemyHealth(self,value):
-        self._enemyHealth = value
 
 # the room class
 # note that this class is fully implemented with dictionaries as illustrated in the lesson "More on Data Structures"
@@ -142,13 +123,28 @@ class Room:
      
 # the game class
 # inherits from the Frame class of Tkinter
-class Game(Frame,Entities):
+class Game(Frame):
 	# the constructor
 	def __init__(self, parent):
 		# call the constructor in the superclass
 		Frame.__init__(self, parent)
-		Entities.__init__(self,playerHealth = 150, enemyHealth = 300)
-
+		self.playerHealth = 150
+		self.enemyHealth = 300
+  
+	@property
+	def playerHealth(self):
+		return self._playerHealth
+	@playerHealth.setter
+	def playerHealth(self,value):
+		self._playerHealth = value
+        
+	@property
+	def enemyHealth(self):
+		return self._enemyHealth
+	@enemyHealth.setter
+	def enemyHealth(self,value):
+		self._enemyHealth = value
+        
 	# creates the rooms
 	def createRooms(self):
 		#change before we put in 
@@ -197,7 +193,7 @@ class Game(Frame,Entities):
 		r5.addItem("beans",'You feel a great sense of power from these beans, they say the owner is somebody named Goku')
 		r5.addGrabbable("beans")
 
-		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up Livy Dunne in Ohio\nwith level 100 rizz, he also has a PHD \nin Rizzonomics")
+		r6.addEnemy("baby-gronk", "A powerful foe who rizzes up Livy Dunne in Ohio\nwith level 100 rizz, he also has a PHD \nin Rizzonomics")
 		
 		Game.currentRoom = r1
 		Game.inventory = []
@@ -207,18 +203,19 @@ class Game(Frame,Entities):
 		bossDamage = choice[0,5,10,20,3,3]
 		if(name == "player"):
 			Game.text.insert(f"You did {(playerDamage)} damage to Baby-Gronk!")
-			self.enemyHealth -= playerDamage
-			return choice(playerDamage)
+			return playerDamage
 		else:
 			Game.text.insert(f"The boss did {(bossDamage)} damage to you!")
-			self.playerHealth -= bossDamage
+			return bossDamage
 
 	def commenceBattle(self):
-		while(self.playerHealth > 0 and self.enemyHealth > 0):
-			self.attack("player")
-			self.attack("boss")
+		playerHealth = 150
+		enemyHealth = 300
+		while(playerHealth > 0 and enemyHealth > 0):
+			playerHealth -= self.attack("player")
+			enemyHealth -= self.attack("boss")
    
-		if(self.playerHealth == 0):
+		if(playerHealth == 0):
 			#player loses return True
 			return True 
 		else:
@@ -384,18 +381,18 @@ class Game(Frame,Entities):
 			elif(verb == "attack"):
 				response = "I don't know what enemy you're talking about."
 
-				for enemy in Game.currentRoom.enemy:
+			
+				if(noun == Game.currentRoom.enemy):
 					self.setStatus("Battle has commenced")
-					result = Game.commenceBattle(enemy)
-
-
+					result = Game.commenceBattle()
+     
 					if(result == False):
 						response = "Congratulations you won the game! \nYou can continue exploring or quit the game."
 						exit(0)
 					else:
 						response = "You lost goodbye..."
 						Game.img = PhotoImage(file = "Room Adventure/roomImage/skull.gif")
-					break
+					
  
 		# display the response on the right of the GUI
 		# display the room's image on the left of the GUI
