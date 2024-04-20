@@ -127,6 +127,8 @@ class Room:
 			s += "You also see: "
 			for baddy in self.enemy:
 				s+= baddy
+				descrip = self.enemy["Baby-Gronk"]
+				s+= f"\n{descrip}"	
 				s+= "\n"
 		
 		# next, the exits from the room
@@ -193,7 +195,7 @@ class Game(Frame,Entities):
 		r5.addGrabbable("Fire-flower")
 		r5.addGrabbable("Sensu-bean")
 
-		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up livy dunne in Ohio with level 100 rizz, he also has a PHD in Rizzonomics")
+		r6.addEnemy("Baby-Gronk", "A powerful foe who rizzes up Livy Dunne in Ohio\nwith level 100 rizz, he also has a PHD \nin Rizzonomics")
 
 		
 		Game.currentRoom = r1
@@ -336,19 +338,15 @@ class Game(Frame,Entities):
 			if (verb == "go"):
 				# set a default response
 				response = "Invalid exit."
-   
+     
 				# check for valid exits in the current room
 				if (noun in Game.currentRoom.exits):
 					# if one is found, change the current room to
 					# the one that is associated with the
 					# specified exit
 					Game.currentRoom = Game.currentRoom.exits[noun] 
-     
-				
-     
-     		#response = ("You need to find the key")
-				# set the response (success)
-				response = "Room changed."
+					# set the response (success)
+					response = "Room changed."
     
 			# the verb is: look
 			elif (verb == "look"):
