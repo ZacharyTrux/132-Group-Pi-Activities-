@@ -1,11 +1,10 @@
 ###########################################################################################
 # Name: Zachary, Alayna, Justus, Grayson
 # Date: 4/22/2024
-# Description: 
+# Description: Epic room adevnture with a suprise twist at the end, good luck rizz lord.
 ###########################################################################################
 from tkinter import *
 from random import choice
-import time
 
 
 # the room class
@@ -200,8 +199,20 @@ class Game(Frame):
 
 	def attack(self,name):
 		#decide what damage should be returned
-		playerDamage = choice([0,175,50,50,25,25,10,10,10])
-		bossDamage = choice([0,0,0,150])
+		if ("sword" in Game.inventory or "fire-flower" in Game.inventory or "beans" in Game.inventory):
+			damagelist_player = [0,200]
+		else:
+			damagelist_player = [0,175,50,50,25,25,10,10,10]
+   
+		playerDamage = choice(damagelist_player)
+  
+		if("shield" in Game.inventory):
+			damagelist_enemy = [0,0,0,150]
+		else:
+			damagelist_enemy = [0,150]
+   
+		bossDamage = choice(damagelist_enemy)
+  
 		if(name == "player"):
 			return playerDamage
 		else:
@@ -386,13 +397,14 @@ class Game(Frame):
 						#start the battle returning a boolean variable showing loss or win
 						self.setStatus("Battle has commenced")
 						result = self.commenceBattle()
+					
 		
 						if(result == False):
 							response = "Congratulations you won the game! \nThe title of Rizzler is bestowed upon you.\nYour adventure is complete, the only option is to quit now."
 		
 						else:
 							response = "You lost goodbye... Narts, out rizzled again!"
-							Game.img = PhotoImage(file = "Room Adventure/roomImage/skull.gif")
+							Game.currentRoom = None
 							
  
 		# display the response on the right of the GUI
