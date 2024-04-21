@@ -5,6 +5,7 @@
 ###########################################################################################
 from tkinter import *
 from random import choice
+import time
 
 
 # the room class
@@ -147,7 +148,6 @@ class Game(Frame):
         
 	# creates the rooms
 	def createRooms(self):
-		#change before we put in 
 	
 		r1 = Room("Room 1", "Room Adventure/roomImage/ZachRoom1.gif")
 		r2 = Room("Room 2", "Room Adventure/roomImage/Alaynaroom2.gif")
@@ -199,22 +199,18 @@ class Game(Frame):
 		Game.inventory = []
 
 	def attack(self,name):
-		playerDamage = choice([0,45,70,125,20,20,20])
-		bossDamage = choice([0,5,10,20,3,3])
+		#decide what damage should be returned
+		playerDamage = choice([0,175,50,50,25,25,10,10,10])
+		bossDamage = choice([0,0,0,150])
 		if(name == "player"):
-			Game.text.config(state=NORMAL)
-			Game.text.insert(END,f"You did {(playerDamage)} damage to Baby-Gronk!")
-			Game.text.config(state=DISABLED)
 			return playerDamage
 		else:
-			Game.text.config(state=NORMAL)
-			Game.text.insert(END,f"The boss did {(bossDamage)} damage to you!")
-			Game.text.config(state=DISABLED)
 			return bossDamage
 
 	def commenceBattle(self):
+		#set the values for the battle against the rizz lord
 		playerHealth = 150
-		enemyHealth = 300
+		enemyHealth = 200
 		while(playerHealth > 0 and enemyHealth > 0):
 			playerHealth -= self.attack("player")
 			enemyHealth -= self.attack("boss")
@@ -384,18 +380,20 @@ class Game(Frame):
   
 			elif(verb == "attack"):
 				response = "I don't know what enemy you're talking about."
-
-				if(noun == "baby-gronk"):
-					self.setStatus("Battle has commenced")
-					result = self.commenceBattle()
-     
-					if(result == False):
-						response = "Congratulations you won the game! \nThe title of Rizzler is bestowed upon you."
-
-					else:
-						response = "You lost goodbye..."
-						Game.img = PhotoImage(file = "Room Adventure/roomImage/skull.gif")
-					
+				#account for enemy not being in the room mentioned
+				for enemy in Game.currentRoom.enemy:
+					if(noun == enemy):
+						#start the battle returning a boolean variable showing loss or win
+						self.setStatus("Battle has commenced")
+						result = self.commenceBattle()
+		
+						if(result == False):
+							response = "Congratulations you won the game! \nThe title of Rizzler is bestowed upon you.\nYour adventure is complete, the only option is to quit now."
+		
+						else:
+							response = "You lost goodbye... Narts, out rizzled again!"
+							Game.img = PhotoImage(file = "Room Adventure/roomImage/skull.gif")
+							
  
 		# display the response on the right of the GUI
 		# display the room's image on the left of the GUI
