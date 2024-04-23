@@ -397,7 +397,7 @@ class Game(Frame):
 						#start the battle returning a boolean variable showing loss or win
 						self.setStatus("Battle has commenced")
 						result = self.commenceBattle()
-					
+						
 		
 						if(result == False):
 							response = "Congratulations you won the game! \nThe title of Rizzler is bestowed upon you.\nYour adventure is complete, the only option is to quit now."
