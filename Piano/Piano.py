@@ -3,7 +3,7 @@
 # Date:
 # Description: Paper piano (v3).
 ########################################
-import RPi.GPIO as GPIO
+import pineworkslabs.GPIO as GPIO
 from time import sleep, time
 import pygame
 from array import array
