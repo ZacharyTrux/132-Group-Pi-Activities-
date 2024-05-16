@@ -1,5 +1,5 @@
 ########################################
-# Name:
+# Name: Grayson Lessard, Zachary Truxillo, Alayna Fielder-Fields, justus Blanchard
 # Date:
 # Description: Paper piano (v3).
 ########################################
@@ -35,7 +35,13 @@ class Note(pygame.mixer.Sound):
                 samples[t] = amplitude
             else:
                 samples[t] = -amplitude
-                
+        '''
+        for t in range(period):
+            if(t < period / 2):
+                samples[t] += amplitude
+            elif
+
+        '''   
         return samples
             
 # waits until a note is pressed
@@ -107,7 +113,9 @@ green = 18
 blue = 17 # if red is too dim, use blue
 
 # setup the input pins
-GPIO.setup(keys, GPIO.IN, GPIO.PUD_DOWN)
+for i in keys:
+    GPIO.setup(keys, GPIO.IN, GPIO.PUD_DOWN)
+
 GPIO.setup(play, GPIO.IN, GPIO.PUD_DOWN)
 GPIO.setup(record, GPIO.IN, GPIO.PUD_DOWN)
 
