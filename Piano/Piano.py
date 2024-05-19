@@ -1,24 +1,35 @@
 ########################################
-# Name: Grayson Lessard, Zachary Truxillo, Alayna Fielder-Fields, justus Blanchard
-# Date:
-# Description: Paper piano (v3).
+# Name: Grayson Lessard, Zachary Truxillo, 
+# Alayna Fielder-Fields, Justus Blanchard 
+# Date: May 16th, 2024 
+# Description: Paper Piano (v3).
 ########################################
-import pineworkslabs.GPIO as GPIO
+import pineworkslabs.RPi as GPIO
 from time import sleep, time
 import pygame
 from array import array
+from waveform_vis import WaveformVis
+from math import floor
+from math import sin
+
 MIXER_FREQ = 44100
 MIXER_SIZE = -16
 MIXER_CHANS = 1
 MIXER_BUFF = 1024
+waveform_name = ''
+
+# Wave selector variable. Change this to change wave used.
+# 0 = Square; 1 = Triangle; 2 = Sawtooth; 3 = Sinusoidal
+useWave = 3
+
 # the note generator class
 class Note(pygame.mixer.Sound):
     # note that volume ranges from 0.0 to 1.0
     def __init__(self, frequency, volume):
         self.frequency = frequency
+        
         # initialize the note using an array of samples
-        pygame.mixer.Sound.__init__(self,\
-            buffer=self.build_samples())
+        pygame.mixer.Sound.__init__(self, buffer=self.build_samples())
         self.set_volume(volume)
         
     # builds an array of samples for the current note
@@ -26,22 +37,71 @@ class Note(pygame.mixer.Sound):
         # calculate the period and amplitude of the note's wave
         period = int(round(MIXER_FREQ / self.frequency))
         amplitude = 2 ** (abs(MIXER_SIZE) - 1) - 1
+        print(amplitude)
+
         # initialize the note's samples (using an array of
         # signed 16-bit "shorts")
         samples = array("h", [0] * period)
+        
         # generate the note's samples
-        for t in range(period):
-            if(t < period / 2):
-                samples[t] = amplitude
-            else:
-                samples[t] = -amplitude
-        '''
-        for t in range(period):
-            if(t < period / 2):
-                samples[t] += amplitude
-            elif
+        # Square wave
+        if useWave == 0:
+            for t in range(period):
+                if (t < period / 2):
+                    samples[t] = amplitude
+                else:
+                    samples[t] =-amplitude
+    
+        # Triangle wave
+        if useWave == 1:
+            x = 0
+            difference = floor(amplitude * 3.85 // len(samples))
+            print(period)
 
-        '''   
+            for t in range(period):
+                if (t <= period / 4 and x < amplitude):
+                    x += difference
+                    samples[t] = x
+                    print(x)
+                elif (t > period / 4 and t <= period / 2  and x < amplitude):
+                    x -= difference
+                    samples[t] = x
+                    print(x)
+                elif (t > period / 2 and t <= period / 1.33 and x < amplitude):
+                    x -= difference
+                    samples[t] = x
+                else:
+                    x += difference
+                    samples[t] = x
+
+        # Sawtooth Wave
+        if useWave == 2:    
+            x = 0
+            difference = floor(amplitude * 1 // len(samples))
+
+        
+            for t in range(period):
+                if t == 85:
+                    x = -x
+            
+                samples[t] = x
+                print(x)
+                x += difference
+        
+        # Sinusoidal Wave
+        if useWave == 3:
+            x = 0
+            difference = floor(amplitude // len(samples))
+
+            for t in range(period):
+                x = floor(amplitude * sin(2 * 3.14159 * (t/169)))
+                samples[t] = x
+
+        # Visualize the selected waveform. Uses Tkinter to render an image
+        # of the wave.
+        # vis = WaveformVis()
+        # vis.visSamples(samples, waveform_name)
+   
         return samples
             
 # waits until a note is pressed
@@ -97,16 +157,17 @@ MIXER_BUFF)
 pygame.init()
 
 # use the Broadcom pin mode
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.LE_POTATO_LOOKUP)
 
 # setup the pins and frequencies for the notes (C, E, G, B)
-keys = [ 20, 16, 12, 26 ]
-freqs = [ 261.6, 329.6, 392.0, 493.9 ]
+keys = [20, 16, 12, 26]
+freqs = [261.6, 329.6, 392.0, 493.9]
 notes = []
 
 # setup the button pins
 play = 19
 record = 21
+
 # setup the LED pins
 red = 27
 green = 18
@@ -114,7 +175,7 @@ blue = 17 # if red is too dim, use blue
 
 # setup the input pins
 for i in keys:
-    GPIO.setup(keys, GPIO.IN, GPIO.PUD_DOWN)
+    GPIO.setup(i, GPIO.IN, GPIO.PUD_DOWN)
 
 GPIO.setup(play, GPIO.IN, GPIO.PUD_DOWN)
 GPIO.setup(record, GPIO.IN, GPIO.PUD_DOWN)
@@ -181,6 +242,7 @@ try:
             # start the timer and play the note
             start = time()
             notes[key].play(-1)
+            print("Playing note...")
             wait_for_note_stop(keys[key])
             notes[key].stop()
             
